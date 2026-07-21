@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Kozzak Mens Wear",
+  "description": "A premium men\u0027s fashion e-commerce store featuring dynamic catalog browsing, secure ordering, interactive order tracking, AI customer assistant, and an integrated admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

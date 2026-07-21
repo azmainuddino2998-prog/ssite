@@ -1,0 +1,57 @@
+[
+  {
+    "name": "T-Shirts",
+    "image": "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/d5276a47d_generated_4679ab5d.png",
+    "description": "Premium cotton t-shirts",
+    "order": 1,
+    "id": "6a5e085330a04700183726be",
+    "created_date": "2026-07-20T11:36:51.841000",
+    "updated_date": "2026-07-20T11:36:51.841000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "name": "Pants",
+    "image": "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/6cd485620_generated_c68fa190.png",
+    "description": "Formal & casual trousers",
+    "order": 2,
+    "id": "6a5e085330a04700183726bf",
+    "created_date": "2026-07-20T11:36:51.841000",
+    "updated_date": "2026-07-20T11:36:51.841000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "name": "Shirts",
+    "image": "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/bc7617b22_generated_9ed8015b.png",
+    "description": "Dress shirts & casual shirts",
+    "order": 3,
+    "id": "6a5e085330a04700183726c0",
+    "created_date": "2026-07-20T11:36:51.841000",
+    "updated_date": "2026-07-20T11:36:51.841000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "name": "Jackets",
+    "image": "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/c875a8b3f_generated_cc047c9f.png",
+    "description": "Leather & denim jackets",
+    "order": 4,
+    "id": "6a5e085330a04700183726c1",
+    "created_date": "2026-07-20T11:36:51.841000",
+    "updated_date": "2026-07-20T11:36:51.841000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "name": "Accessories",
+    "image": "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/b4cd70cda_generated_227b90c3.png",
+    "description": "Belts, wallets & more",
+    "order": 5,
+    "id": "6a5e085330a04700183726c2",
+    "created_date": "2026-07-20T11:36:51.841000",
+    "updated_date": "2026-07-20T11:36:51.841000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  }
+]

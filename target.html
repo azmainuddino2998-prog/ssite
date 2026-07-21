@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <link href="/vite.svg" rel="icon" type="image/svg+xml"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Kozzak Mens Wear - Premium Men's Fashion
+  </title>
+  <meta content="Kozzak Mens Wear - Premium men's clothing store in Bangladesh. Shop t-shirts, shirts, trousers, jackets and accessories. Best quality men's fashion delivered to your door." name="description"/>
+  <meta content="mens wear, men clothing, fashion, Bangladesh, Kozzak, premium clothing, t-shirts, shirts, trousers, jackets" name="keywords"/>
+  <meta content="Kozzak Mens Wear - Premium Men's Fashion" property="og:title"/>
+  <meta content="Premium men's clothing store in Bangladesh. Shop the latest collection." property="og:description"/>
+  <meta content="website" property="og:type"/>
+  <meta content="index, follow" name="robots"/>
+  <script crossorigin="" src="/assets/index-wKJrHDrS.js" type="module">
+  </script>
+  <link crossorigin="" href="/assets/index-cxl-ZC4h.css" rel="stylesheet"/>
+  <script type="module">
+   if (window.self === window.top) {
+  let lastPath = "";
+  function getPageNameFromPath(path) {
+    const segments = path.split("/").filter(Boolean);
+    return segments[0] || null;
+  }
+  function trackPageView() {
+    const path = window.location.pathname;
+    if (path === lastPath) return;
+    lastPath = path;
+    const pageName = getPageNameFromPath(path) || "home";
+    const appId = "6a5e0623b671b808e3a154f8";
+    if (!appId) return;
+    fetch(`/api/app-logs/${appId}/log-user-in-app/${pageName}`, {
+      method: "POST",
+    }).catch(() => {});
+  }
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function (...args) {
+    originalPushState(...args);
+    trackPageView();
+  };
+  const originalReplaceState = history.replaceState.bind(history);
+  history.replaceState = function (...args) {
+    originalReplaceState(...args);
+    trackPageView();
+  };
+  window.addEventListener("popstate", trackPageView);
+  trackPageView();
+}
+  </script>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="Kozzak Mens Wear" name="apple-mobile-web-app-title"/>
+  <script async="true" data-app-id="6a5e0623b671b808e3a154f8" data-platform-url="https://app.base44.com" src="/static/js/badge.js">
+  </script>
+ </head>
+ <body>
+  <div id="root">
+  </div>
+ </body>
+</html>

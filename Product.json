@@ -1,0 +1,102 @@
+[
+  {
+    "best_seller": true,
+    "images": [
+      "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/e0a8ad723_generated_5818e975.png"
+    ],
+    "featured": true,
+    "delivery_charge_dhaka": 80,
+    "discount_price": 1450,
+    "cod_available": true,
+    "description": "Classic navy polo made from premium Egyptian cotton. Perfect for casual and semi-formal occasions.",
+    "title": "Premium Navy Polo",
+    "colors": "Navy, Black, White",
+    "sizes": "S, M, L, XL, XXL",
+    "price": 1800,
+    "category": "T-Shirts",
+    "sku": "KZK-POLO001",
+    "stock": 50,
+    "delivery_charge_outside": 150,
+    "status": "active",
+    "id": "6a5e08650aae504a94a636cc",
+    "created_date": "2026-07-20T11:37:09.589000",
+    "updated_date": "2026-07-20T11:37:09.589000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "best_seller": true,
+    "images": [
+      "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/aeb6f32fa_generated_308d1061.png"
+    ],
+    "featured": true,
+    "delivery_charge_dhaka": 80,
+    "discount_price": 2100,
+    "cod_available": true,
+    "description": "Elegantly tailored slim-fit trousers in premium wool blend. Sharp crease for a polished look.",
+    "title": "Slim Fit Black Trousers",
+    "colors": "Black, Charcoal, Navy",
+    "sizes": "30, 32, 34, 36, 38",
+    "price": 2500,
+    "category": "Pants",
+    "sku": "KZK-TRS001",
+    "stock": 40,
+    "delivery_charge_outside": 150,
+    "status": "active",
+    "id": "6a5e08650aae504a94a636cd",
+    "created_date": "2026-07-20T11:37:09.589000",
+    "updated_date": "2026-07-20T11:37:09.589000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "best_seller": false,
+    "images": [
+      "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/6eb2b36a8_generated_cb947eb4.png"
+    ],
+    "featured": true,
+    "delivery_charge_dhaka": 80,
+    "discount_price": 0,
+    "cod_available": true,
+    "description": "Crisp white dress shirt crafted from fine cotton. Essential for every gentleman's wardrobe.",
+    "title": "Classic White Dress Shirt",
+    "colors": "White, Light Blue, Pink",
+    "sizes": "S, M, L, XL",
+    "price": 2200,
+    "category": "Shirts",
+    "sku": "KZK-SHT001",
+    "stock": 35,
+    "delivery_charge_outside": 150,
+    "status": "active",
+    "id": "6a5e08650aae504a94a636ce",
+    "created_date": "2026-07-20T11:37:09.589000",
+    "updated_date": "2026-07-20T11:37:09.589000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  },
+  {
+    "best_seller": true,
+    "images": [
+      "https://media.base44.com/images/public/6a5e0623b671b808e3a154f8/53d41e42f_generated_4792d832.png"
+    ],
+    "featured": true,
+    "delivery_charge_dhaka": 80,
+    "discount_price": 6990,
+    "cod_available": true,
+    "description": "Premium genuine leather bomber jacket. Timeless design with a modern edge for the bold gentleman.",
+    "title": "Leather Bomber Jacket",
+    "colors": "Dark Brown, Black",
+    "sizes": "M, L, XL, XXL",
+    "price": 8500,
+    "category": "Jackets",
+    "sku": "KZK-JKT001",
+    "stock": 20,
+    "delivery_charge_outside": 150,
+    "status": "active",
+    "id": "6a5e08650aae504a94a636cf",
+    "created_date": "2026-07-20T11:37:09.589000",
+    "updated_date": "2026-07-20T11:37:09.589000",
+    "created_by_id": "service_a002a750-8e06-46c2-8a9c-9b94cad1976e",
+    "is_sample": false
+  }
+]

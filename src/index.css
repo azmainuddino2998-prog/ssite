@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-obsidian: #05070c;
+  --color-cobalt: #2563eb;
+  --color-silver: #f1f5f9;
+  --color-gold: #fbbf24;
+}
+
+body {
+  background-color: #05070c;
+  font-family: var(--font-sans);
+  color: #f1f5f9;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism custom design effects */
+.glass {
+  background: rgba(15, 22, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(241, 245, 249, 0.05);
+}
+
+.glass-card {
+  background: rgba(15, 22, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(241, 245, 249, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s, transform 0.3s;
+}
+
+.glass-card:hover {
+  border-color: rgba(37, 99, 235, 0.25);
+  background: rgba(15, 22, 42, 0.55);
+}
+
+.glass-light {
+  background: rgba(15, 22, 42, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.glow-blue {
+  box-shadow: 0 0 20px 2px rgba(37, 99, 235, 0.45);
+}
+
+/* Custom visual scrollbar hiders */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Touch friendly momentum scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Success ripple microanimation */
+@keyframes success-ripple {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.success-ripple {
+  animation: success-ripple 0.8s ease-out forwards;
+}
