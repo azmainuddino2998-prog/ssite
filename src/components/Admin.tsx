@@ -23,6 +23,7 @@ import { AdminContactMessages } from './AdminContactMessages';
 import { AdminSiteSettings } from './AdminSiteSettings';
 import { De } from '../lib/sdk';
 import { SiteSettings } from '../types';
+import { supabase } from '../supabaseClient';
 
 type TabKey = 'dashboard' | 'products' | 'categories' | 'banners' | 'orders' | 'messages' | 'settings';
 
@@ -33,11 +34,22 @@ export const Admin: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Auth Guard check
-    const auth = JSON.parse(localStorage.getItem('kozzak_auth') || 'null');
-    if (!auth || auth.role !== 'admin') {
-      navigate('/login');
-    }
+    // Auth Guard check: strictly require samirazmain8@gmail.com for admin panel
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      const auth = JSON.parse(localStorage.getItem('kozzak_auth') || 'null');
+
+      const userEmail = session?.user?.email?.toLowerCase() || auth?.email?.toLowerCase();
+      const isAdminUser = userEmail === 'samirazmain8@gmail.com';
+
+      if (!isAdminUser) {
+        navigate('/login');
+        return;
+      }
+    };
+
+    checkAuth();
 
     // Fetch site settings for dynamic name
     De.entities.SiteSettings.list()
@@ -49,7 +61,8 @@ export const Admin: React.FC = () => {
       .catch((err) => console.error('Error fetching settings in Admin:', err));
   }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut().catch(() => {});
     localStorage.removeItem('kozzak_auth');
     navigate('/login');
   };

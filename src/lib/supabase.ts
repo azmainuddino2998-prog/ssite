@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { Product, Category, Banner, SiteSettings, Order, ContactMessage } from '../types';
 
 // Supabase URL and Anon Key requested by user
-export const SUPABASE_URL = (import.meta as any).env?.VITE_SUPABASE_URL || (import.meta as any).env?.NEXT_PUBLIC_SUPABASE_URL || 'https://suledsfjgbsyzayvzgco.supabase.co';
-export const SUPABASE_ANON_KEY = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || (import.meta as any).env?.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1bGVkc2ZqZ2JzeXpheXZ6Z2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzOTExODUsImV4cCI6MjA5OTk2NzE4NX0.y3IqePBYfp9UW8HiIsKhnnqqgUPqBqljPzIlfy-TpiY';
+export const SUPABASE_URL = (import.meta as any).env?.VITE_SUPABASE_URL || (import.meta as any).env?.NEXT_PUBLIC_SUPABASE_URL || 'https://zdncdrnmcihumntlpfsu.supabase.co';
+export const SUPABASE_ANON_KEY = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || (import.meta as any).env?.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_NIZc1JJ7iub1y52twM2VWA_ho_zbsfe';
 
 // Create Client
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -111,6 +111,16 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   ai_response TEXT,
   created_date TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
+
+-- 8. Storage Buckets Setup SQL (Optional: run in SQL Editor if bucket not created)
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('kojaak', 'kojaak', true), ('media', 'media', true), ('public', 'public', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage RLS Policies
+CREATE POLICY "Public Read Access for Storage" ON storage.objects FOR SELECT USING (bucket_id IN ('kojaak', 'media', 'public'));
+CREATE POLICY "Public Upload Access for Storage" ON storage.objects FOR INSERT WITH CHECK (bucket_id IN ('kojaak', 'media', 'public'));
+CREATE POLICY "Public Update Access for Storage" ON storage.objects FOR UPDATE USING (bucket_id IN ('kojaak', 'media', 'public'));
 
 -- ==========================================
 -- ROW LEVEL SECURITY (RLS) CONFIGURATIONS
@@ -386,7 +396,7 @@ export const SupabaseDB = {
     }
   },
 
-  // 6. Contact Messages
+  // 7. Contact Messages
   contactMessages: {
     async list(sort?: string, limit?: number): Promise<ContactMessage[]> {
       let query = supabase.from('contact_messages').select('*');
@@ -411,3 +421,45 @@ export const SupabaseDB = {
     }
   }
 };
+
+/**
+ * Supabase Storage File Upload Utility
+ * Uploads a file directly to the Supabase Storage bucket ('kojaak', 'media', 'public')
+ * and returns the public CDN URL, or falls back seamlessly to Base64 Data URL.
+ */
+export async function uploadFileToSupabaseStorage(file: File, primaryBucket = 'kojaak'): Promise<string> {
+  const fileExt = file.name.split('.').pop() || 'png';
+  const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+  const filePath = `uploads/${fileName}`;
+
+  const bucketsToTry = Array.from(new Set([primaryBucket, 'kojaak', 'media', 'public']));
+
+  for (const bucket of bucketsToTry) {
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+
+      if (!uploadError) {
+        const { data: publicUrlData } = supabase.storage.from(bucket).getPublicUrl(filePath);
+        if (publicUrlData?.publicUrl) {
+          return publicUrlData.publicUrl;
+        }
+      }
+    } catch {
+      // Continue trying next bucket
+    }
+  }
+
+  // Fallback: convert file to Base64 Data URL so user image uploads always succeed seamlessly
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+}
+

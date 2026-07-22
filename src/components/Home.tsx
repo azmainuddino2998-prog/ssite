@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { De } from '../lib/sdk';
 import { Product, Category } from '../types';
@@ -13,7 +13,6 @@ export const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const featuredScrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -28,15 +27,6 @@ export const Home: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const handleScrollFeatured = (direction: number) => {
-    if (featuredScrollRef.current) {
-      featuredScrollRef.current.scrollBy({
-        left: direction * 300,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   const featuredProducts = products.filter((p) => p.featured);
   const bestSellers = products.filter((p) => p.best_seller);
 
@@ -49,50 +39,42 @@ export const Home: React.FC = () => {
       <Hero />
 
       {/* Featured Products Section */}
-      <section className="py-12 sm:py-16 md:py-20 max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
-        <div className="flex items-center justify-between mb-6 sm:mb-10">
+      <section className="py-8 sm:py-10 md:py-12 max-w-7xl mx-auto px-3 sm:px-6 md:px-8">
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div>
-            <p className="text-cobalt text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-1 sm:mb-2 font-semibold">Our Collection</p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-silver">Featured Products</h2>
+            <p className="text-cobalt text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-1 font-semibold">Our Collection</p>
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-silver">Featured Products</h2>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => handleScrollFeatured(-1)}
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center text-silver/70 hover:text-white cursor-pointer transition-colors active:scale-95"
-              aria-label="Scroll Featured Left"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => handleScrollFeatured(1)}
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center text-silver/70 hover:text-white cursor-pointer transition-colors active:scale-95"
-              aria-label="Scroll Featured Right"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+          <Link
+            to="/category"
+            className="text-xs sm:text-sm text-cobalt hover:text-silver transition-colors font-medium flex items-center gap-1"
+          >
+            <span>View All</span>
+            <ChevronRight size={14} />
+          </Link>
         </div>
 
         {isLoading ? (
-          <div className="flex items-center justify-center py-16">
-            <div className="w-8 h-8 border-2 border-cobalt/30 border-t-cobalt rounded-full animate-spin" />
+          <div className="flex items-center justify-center py-12">
+            <div className="w-7 h-7 border-2 border-cobalt/30 border-t-cobalt rounded-full animate-spin" />
           </div>
+        ) : displayFeatured.length === 0 ? (
+          <p className="text-silver/30 text-xs sm:text-sm py-6 text-center">
+            No products added yet. Add products from the admin panel.
+          </p>
         ) : (
-          <div
-            ref={featuredScrollRef}
-            className="flex gap-3 sm:gap-5 md:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x touch-scroll"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {displayFeatured.map((prod) => (
-              <div key={prod.id} className="min-w-[200px] sm:min-w-[250px] md:min-w-[280px] snap-start shrink-0">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {displayFeatured.map((prod, idx) => (
+              <motion.div
+                key={prod.id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.03 }}
+              >
                 <ProductCard product={prod} />
-              </div>
+              </motion.div>
             ))}
-            {products.length === 0 && (
-              <p className="text-silver/30 text-sm py-8">
-                No products added yet. Add products from the admin panel.
-              </p>
-            )}
           </div>
         )}
       </section>

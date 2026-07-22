@@ -9,6 +9,7 @@ import { OrderTracking } from './components/OrderTracking';
 import { Contact } from './components/Contact';
 import { Login } from './components/Login';
 import { Admin } from './components/Admin';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { Chatbot } from './components/Chatbot';
 import { De } from './lib/sdk';
 
@@ -63,7 +64,14 @@ export default function App() {
         <Route path="/order-tracking" element={<OrderTracking />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requireAdmin>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Chatbot />
     </BrowserRouter>

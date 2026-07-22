@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
     }
     timerRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % banners.length);
-    }, 6000);
+    }, 3500);
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
   const currentBanner = banners[currentIndex];
 
   return (
-    <section className="relative min-h-[85dvh] sm:min-h-screen overflow-hidden bg-obsidian flex items-center">
+    <section className="relative min-h-[65dvh] sm:min-h-[75dvh] md:min-h-[85dvh] h-[550px] sm:h-[650px] md:h-[720px] max-h-[850px] overflow-hidden bg-obsidian flex items-center">
       {/* Background Slides */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -109,39 +109,39 @@ export const Hero: React.FC = () => {
 
       {/* Floating Ambient Accent Blur */}
       <div className="absolute inset-0 pointer-events-none transition-all duration-1000 opacity-20">
-        <div className="absolute top-[30%] left-[20%] w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] bg-cobalt/35 rounded-full blur-[100px] sm:blur-[120px]" />
+        <div className="absolute top-[30%] left-[20%] w-[200px] sm:w-[280px] h-[200px] sm:h-[280px] bg-cobalt/35 rounded-full blur-[80px] sm:blur-[100px]" />
       </div>
 
       {/* Slide Text Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 w-full relative z-10 pt-16 sm:pt-20 pb-12 sm:pb-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 w-full relative z-10 pt-12 sm:pt-16 pb-8 sm:pb-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-xl text-left"
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-xl md:max-w-2xl text-left"
           >
             <motion.p
               initial={{ opacity: 0, tracking: '0.1em' }}
-              animate={{ opacity: 0.6, tracking: '0.25em' }}
-              className="text-cobalt text-[11px] sm:text-xs font-semibold uppercase mb-3 sm:mb-4"
+              animate={{ opacity: 0.8, tracking: '0.25em' }}
+              className="text-cobalt text-xs sm:text-sm font-bold uppercase mb-2 sm:mb-3"
             >
               {currentBanner.slogan || 'Kozzak Mens Wear'}
             </motion.p>
-            <motion.h1 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-silver tracking-tight leading-tight mb-5 sm:mb-6">
+            <motion.h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-silver tracking-tight leading-[1.1] mb-5 sm:mb-7">
               {currentBanner.title}
             </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15 }}
             >
               <Link
                 to="/category"
-                className="inline-flex items-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-cobalt text-white text-sm sm:text-base font-semibold rounded-xl glow-blue transition-transform hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 bg-cobalt text-white text-sm sm:text-base font-semibold rounded-xl glow-blue transition-transform hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-xl"
               >
                 <span>Shop Collection</span>
                 <ChevronRight size={18} />

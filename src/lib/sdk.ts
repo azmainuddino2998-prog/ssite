@@ -92,11 +92,24 @@ class EntityService<T> {
       }
     }
 
-    const url = new URL(`/api/entities/${this.entityName}`, window.location.origin);
-    if (sort) url.searchParams.set('sort', sort);
-    if (limit) url.searchParams.set('limit', String(limit));
-    const res = await fetch(url.toString());
-    return res.json();
+    try {
+      let endpoint = `/api/entities/${this.entityName}`;
+      const params = new URLSearchParams();
+      if (sort) params.set('sort', sort);
+      if (limit) params.set('limit', String(limit));
+      const queryString = params.toString();
+      if (queryString) endpoint += `?${queryString}`;
+
+      const res = await fetch(endpoint);
+      if (!res.ok) {
+        console.warn(`Local API list failed for ${this.entityName} with status ${res.status}`);
+        return [];
+      }
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch list for ${this.entityName} failed:`, err);
+      return [];
+    }
   }
 
   async filter(query: any, sort?: string, limit?: number): Promise<T[]> {
@@ -122,12 +135,21 @@ class EntityService<T> {
       }
     }
 
-    const url = new URL(`/api/entities/${this.entityName}`, window.location.origin);
-    url.searchParams.set('q', JSON.stringify(query));
-    if (sort) url.searchParams.set('sort', sort);
-    if (limit) url.searchParams.set('limit', String(limit));
-    const res = await fetch(url.toString());
-    return res.json();
+    try {
+      let endpoint = `/api/entities/${this.entityName}`;
+      const params = new URLSearchParams();
+      params.set('q', JSON.stringify(query));
+      if (sort) params.set('sort', sort);
+      if (limit) params.set('limit', String(limit));
+      endpoint += `?${params.toString()}`;
+
+      const res = await fetch(endpoint);
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch filter for ${this.entityName} failed:`, err);
+      return [];
+    }
   }
 
   async get(id: string): Promise<T> {
@@ -140,9 +162,14 @@ class EntityService<T> {
       }
     }
 
-    const res = await fetch(`/api/entities/${this.entityName}/${id}`);
-    if (!res.ok) throw new Error('Not found');
-    return res.json();
+    try {
+      const res = await fetch(`/api/entities/${this.entityName}/${id}`);
+      if (!res.ok) throw new Error('Not found');
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch get for ${this.entityName}/${id} failed:`, err);
+      throw err;
+    }
   }
 
   async create(data: Partial<T>): Promise<T> {
@@ -155,12 +182,18 @@ class EntityService<T> {
       }
     }
 
-    const res = await fetch(`/api/entities/${this.entityName}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`/api/entities/${this.entityName}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(`Create failed with status ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch create for ${this.entityName} failed:`, err);
+      throw err;
+    }
   }
 
   async update(id: string, data: Partial<T>): Promise<T> {
@@ -173,12 +206,18 @@ class EntityService<T> {
       }
     }
 
-    const res = await fetch(`/api/entities/${this.entityName}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`/api/entities/${this.entityName}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(`Update failed with status ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch update for ${this.entityName}/${id} failed:`, err);
+      throw err;
+    }
   }
 
   async delete(id: string): Promise<{ success: boolean }> {
@@ -192,10 +231,16 @@ class EntityService<T> {
       }
     }
 
-    const res = await fetch(`/api/entities/${this.entityName}/${id}`, {
-      method: 'DELETE',
-    });
-    return res.json();
+    try {
+      const res = await fetch(`/api/entities/${this.entityName}/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) return { success: false };
+      return await res.json();
+    } catch (err) {
+      console.warn(`Fetch delete for ${this.entityName}/${id} failed:`, err);
+      return { success: false };
+    }
   }
 }
 

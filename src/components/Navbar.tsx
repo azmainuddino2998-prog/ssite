@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, User, ShoppingCart, Package } from 'lucide-react';
 import { De } from '../lib/sdk';
+import { supabase } from '../supabaseClient';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -112,14 +113,23 @@ export const Navbar: React.FC = () => {
 
         {/* Action Icons */}
         <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
-          <Link
-            to="/admin"
+          <button
+            onClick={async () => {
+              const { data } = await supabase.auth.getSession();
+              const auth = JSON.parse(localStorage.getItem('kozzak_auth') || 'null');
+              const email = data?.session?.user?.email?.toLowerCase() || auth?.email?.toLowerCase();
+              if (email === 'samirazmain8@gmail.com') {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/login';
+              }
+            }}
             className="text-silver/70 hover:text-cobalt p-2 rounded-lg transition-colors cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
-            title="Admin Panel"
-            aria-label="Admin Panel"
+            title="User Account / Admin"
+            aria-label="User Account"
           >
             <User size={19} />
-          </Link>
+          </button>
           <Link
             to="/cart"
             className="relative text-silver/70 hover:text-cobalt p-2 rounded-lg transition-colors cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"

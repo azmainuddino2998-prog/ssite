@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Plus, X, Loader2, Check, Save, FileSpreadsheet, Database, Copy, ShieldAlert, KeyRound, Radio } from 'lucide-react';
 import { De } from '../lib/sdk';
 import { SiteSettings } from '../types';
-import { supabase, SUPABASE_SETUP_SQL, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
+import { supabase, SUPABASE_SETUP_SQL, SUPABASE_URL, SUPABASE_ANON_KEY, uploadFileToSupabaseStorage } from '../lib/supabase';
 
 export const AdminSiteSettings: React.FC = () => {
   const [dbSettings, setDbSettings] = useState<SiteSettings | null>(null);
@@ -74,7 +74,7 @@ export const AdminSiteSettings: React.FC = () => {
     if (!file) return;
 
     try {
-      const { file_url } = await De.integrations.Core.UploadFile({ file });
+      const file_url = await uploadFileToSupabaseStorage(file);
       setForm((prev) => ({ ...prev, logo: file_url }));
     } catch (err) {
       console.error('Logo upload failed:', err);
@@ -86,7 +86,7 @@ export const AdminSiteSettings: React.FC = () => {
     if (!file) return;
 
     try {
-      const { file_url } = await De.integrations.Core.UploadFile({ file });
+      const file_url = await uploadFileToSupabaseStorage(file);
       setForm((prev) => ({ ...prev, favicon: file_url }));
     } catch (err) {
       console.error('Favicon upload failed:', err);

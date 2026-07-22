@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Plus, X, Loader2, Check, Save, Pencil, Trash2 } from 'lucide-react';
 import { De } from '../lib/sdk';
 import { Product, Category } from '../types';
+import { uploadFileToSupabaseStorage } from '../lib/supabase';
 
 export const AdminProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -80,12 +81,13 @@ export const AdminProducts: React.FC = () => {
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    if (!e.target.files) return;
+    const files: File[] = Array.from(e.target.files);
     if (files.length === 0) return;
 
     for (const file of files) {
       try {
-        const { file_url } = await De.integrations.Core.UploadFile({ file: file as any });
+        const file_url = await uploadFileToSupabaseStorage(file);
         setForm((prev) => ({
           ...prev,
           images: [...(prev.images || []), file_url]

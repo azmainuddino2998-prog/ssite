@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Plus, X, Loader2, Check, Save, Pencil, Trash2 } from 'lucide-react';
 import { De } from '../lib/sdk';
 import { Category } from '../types';
+import { uploadFileToSupabaseStorage } from '../lib/supabase';
 
 export const AdminCategories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -50,7 +51,7 @@ export const AdminCategories: React.FC = () => {
     if (!file) return;
 
     try {
-      const { file_url } = await De.integrations.Core.UploadFile({ file });
+      const file_url = await uploadFileToSupabaseStorage(file);
       setForm((prev) => ({ ...prev, image: file_url }));
     } catch (err) {
       console.error('Category image upload failed:', err);
